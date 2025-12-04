@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Jadwal - Task & Schedule Management</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="task-menu-page">
+    <div class="dashboard-container">
+        <header class="app-header task-form-header">
+            <a href="../home.html" class="back-btn">❮</a>
+            <h2 class="page-title">Detail Jadwal</h2>
+            <a id="editBtn" class="edit-btn" title="Edit Jadwal">
+                <i class="fas fa-pencil-alt"></i>
+            </a>
+        </header>
+
+        <div id="scheduleDetail" class="task-form">
+            <!-- Schedule Name -->
+            <div class="card-input-wrapper">
+                <label>Nama Jadwal</label>
+                <div class="card-input">
+                    <span id="scheduleName" class="card-input-value"></span>
+                </div>
+            </div>
+            
+            <!-- Note -->
+            <div class="card-input-wrapper">
+                <label>Note</label>
+                <div class="card-input">
+                    <p id="scheduleNote" class="card-input-value"></p>
+                </div>
+            </div>
+
+            <!-- Start Date -->
+            <div class="card-input-wrapper">
+                <label>Start Date</label>
+                <div class="card-input">
+                    <div class="card-icon bg-purple">📅</div>
+                    <span id="scheduleStart" class="card-input-value"></span>
+                </div>
+            </div>
+
+            <!-- End Date -->
+            <div class="card-input-wrapper">
+                <label>End Date</label>
+                <div class="card-input">
+                    <div class="card-icon bg-purple">📅</div>
+                    <span id="scheduleEnd" class="card-input-value"></span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Delete button removed to match design -->
+    </div>
+
+    <script src="../../script.js"></script>
+    <script>
+        checkAuth();
+
+        const scheduleId = getUrlParam('id');
+        const schedule = getScheduleById(scheduleId);
+
+        if (!schedule) {
+            alert('Jadwal tidak ditemukan!');
+            history.back();
+        } else {
+            // Helper to format dates
+            const formatDate = (dateStr) => {
+                const date = new Date(dateStr);
+                return `${String(date.getDate()).padStart(2, '0')} ${date.toLocaleString('id-ID', { month: 'short' })}, ${date.getFullYear()}`;
+            };
+            
+            document.getElementById('scheduleName').textContent = schedule.name;
+            document.getElementById('scheduleNote').textContent = schedule.note || 'Tidak ada catatan.';
+            document.getElementById('scheduleStart').textContent = formatDate(schedule.start);
+            document.getElementById('scheduleEnd').textContent = formatDate(schedule.end);
+
+            // Set Edit Link
+            document.getElementById('editBtn').href = `editschedule.html?id=${scheduleId}`;
+        }
+    </script>
+</body>
+</html>

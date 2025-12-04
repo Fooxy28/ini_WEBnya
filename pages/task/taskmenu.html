@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Menu - Task & Schedule Management</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="taskmenu.css">
+</head>
+<body class="task-menu-page">
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="user-profile">
+                <div class="avatar">
+                    <img src="https://ui-avatars.com/api/?name=Cat+Nip&background=random" alt="Avatar" class="w-100-h-100-rounded">
+                </div>
+                <div class="user-info">
+                    <span class="greeting">Hello!</span>
+                    <span class="username">Cat Nip</span>
+                </div>
+            </div>
+            <div class="notification-icon">
+                🔔
+                <div class="notification-dot"></div>
+            </div>
+        </header>
+
+        <!-- Task Menu Controls -->
+        <div class="task-menu-header">
+            <div class="task-menu-title">
+                <div class="task-icon-large">
+                    +
+                </div>
+                <div>
+                    <h2 class="task-title">Tugas</h2>
+                    <span class="text-muted">My Task's</span>
+                </div>
+            </div>
+
+            <div class="task-menu-controls">
+                <div class="group-select-wrapper custom-dropdown-wrapper">
+                    <div class="group-dropdown custom-dropdown-display" id="groupDropdown">
+                        <div class="group-dropdown-inner">
+                            <div class="card-icon bg-pink group-icon">👜</div>
+                            <div>
+                                <small class="text-muted group-small">Task Group</small>
+                                <span class="group-name" id="selectedGroupName">Semua Group</span>
+                            </div>
+                        </div>
+                        <span>▼</span>
+                    </div>
+                    <div class="custom-dropdown-options" id="groupOptions">
+                        <!-- Options populated by JS -->
+                    </div>
+                </div>
+
+                <a href="addtask.html" class="add-group-btn">+</a>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="container">
+            <!-- Filters -->
+            <div class="task-filters mb-30">
+                <button class="filter-btn active" onclick="setFilter('Semua')">Semua</button>
+                <button class="filter-btn" onclick="setFilter('Todo')">Todo</button>
+                <button class="filter-btn" onclick="setFilter('On Progress')">On Progres</button>
+                <button class="filter-btn" onclick="setFilter('Selesai')">Selesai</button>
+            </div>
+
+            <!-- Task List -->
+            <div id="taskList" class="task-list">
+                <!-- Tasks injected here -->
+                <p class="text-muted">Memuat tugas...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../script.js"></script>
+    <script>
+        // Check Auth
+        checkAuth();
+
+        let currentFilter = 'Semua';
+        let currentGroup = 'all';
+        const tasks = getTasks();
+
+        // Initialize
+        function init() {
+            initTaskMenuDropdown();
+            
+            // Check for URL params to pre-select group
+            const urlGroup = getUrlParam('group');
+            if (urlGroup) {
+                currentGroup = urlGroup;
+                // Re-initialize to update the display text based on the URL param
+                initTaskMenuDropdown(); 
+            }
+
+            renderTasks();
+        }
+
+        function initTaskMenuDropdown() {
+            const wrapper = document.querySelector('.custom-dropdown-wrapper');
+            if (!wrapper) return;
+            const optionsContainer = document.getElementById('groupOptions');
+            const textDisplay = document.getElementById('selectedGroupName');
+
+            // Get unique groups from tasks
+            const groups = ['all', ...new Set(tasks.map(t => t.group || 'Lainnya'))];
+
+            // Populate options
+            optionsContainer.innerHTML = groups.map(g => 
+                `<div class="custom-dropdown-option" data-value="${g}">${g === 'all' ? 'Semua Group' : g}</div>`
+            ).join('');
+
+            // Set initial display
+            textDisplay.textContent = currentGroup === 'all' ? 'Semua Group' : currentGroup;
+
+            // Event listener for opening dropdown
+            const display = wrapper.querySelector('.custom-dropdown-display');
+            display.addEventListener('click', () => {
+                wrapper.classList.toggle('open');
+            });
+
+            // Event listener for selecting an option
+            optionsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('custom-dropdown-option')) {
+                    const selectedValue = e.target.getAttribute('data-value');
+                    
+                    currentGroup = selectedValue;
+                    textDisplay.textContent = e.target.textContent;
+                    
+                    wrapper.classList.remove('open');
+                    renderTasks(); // Re-render tasks with the new group filter
+                }
+            });
+
+            // Global click listener to close dropdown
+            document.addEventListener('click', (e) => {
+                if (!wrapper.contains(e.target)) {
+                    wrapper.classList.remove('open');
+                }
+            });
+        }
+
+        // Filter Logic
+        function setFilter(filter) {
+            currentFilter = filter;
+            
+            // Update buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                const btnText = btn.innerText;
+                // Handle "On Progres" vs "On Progress"
+                const filterMatch = (filter === 'On Progress' && btnText === 'On Progres') || (btnText === filter);
+                
+                if(filterMatch) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+
+            renderTasks();
+        }
+
+        function getTaskCategory(task) {
+            if (task.status === 'done') return 'Selesai';
+            
+            const now = new Date();
+            const end = new Date(task.end);
+            const diffTime = end - now;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+            
+            if (diffDays <= 3) return 'On Progress';
+            return 'Todo';
+        }
+
+        function getGroupIcon(group) {
+            switch(group.toLowerCase()) {
+                case 'project': return '🗂️';
+                case 'personal': return '👤';
+                case 'study': return '📚';
+                default: return '👜';
+            }
+        }
+
+        function renderTasks() {
+            const taskListEl = document.getElementById('taskList');
+            
+            let filteredTasks = tasks;
+
+            // Filter by Group
+            if (currentGroup !== 'all') {
+                filteredTasks = filteredTasks.filter(t => (t.group || 'Lainnya') === currentGroup);
+            }
+
+            // Filter by Category
+            if (currentFilter === 'Todo') {
+                filteredTasks = filteredTasks.filter(t => getTaskCategory(t) === 'Todo');
+            } else if (currentFilter === 'On Progress') {
+                filteredTasks = filteredTasks.filter(t => getTaskCategory(t) === 'On Progress');
+            } else if (currentFilter === 'Selesai') {
+                filteredTasks = filteredTasks.filter(t => getTaskCategory(t) === 'Selesai');
+            }
+
+            if (filteredTasks.length === 0) {
+                taskListEl.innerHTML = '<p class="text-muted" style="text-align: center;">Tidak ada tugas.</p>';
+            } else {
+                taskListEl.innerHTML = filteredTasks.map(task => {
+                    const category = getTaskCategory(task);
+                    let statusClass = 'status-todo';
+                    if (category === 'On Progress') { statusClass = 'status-progress'; }
+                    if (category === 'Selesai') { statusClass = 'status-done'; }
+                    
+                    const group = task.group || 'General';
+                    const groupIcon = getGroupIcon(group);
+
+                    // Format date as DD/Mon/YY
+                    const date = new Date(task.end);
+                    const formattedDate = `${date.getDate()}/${date.toLocaleString('id-ID', { month: 'short' })}/${String(date.getFullYear()).slice(-2)}`;
+                    const formattedTime = date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+                    const isDone = task.status === 'done';
+                    const completedClass = isDone ? 'completed' : '';
+
+                    return `
+                    <div class="task-item-container ${completedClass}" id="task-container-${task.id}">
+                        <div class="task-card-content" onclick="toggleSlide('${task.id}')">
+                            <div class="new-task-card">
+                                <div class="new-task-header">
+                                    <span class="new-task-group">${group}</span>
+                                    <div class="card-icon" style="background-color: var(--${group.toLowerCase()}-bg, #ffe0e0);">${groupIcon}</div>
+                                </div>
+                                <h4 class="new-task-title">
+                                    <span class="task-title-link" onclick="event.stopPropagation(); window.location.href='detailtask.html?id=${task.id}'">${task.name}</span>
+                                </h4>
+                                <div class="new-task-footer">
+                                    <div class="new-task-meta">
+                                        <span>🕒 ${formattedTime}</span>
+                                        <span>${formattedDate}</span>
+                                    </div>
+                                    <span class="new-task-status ${statusClass}" id="status-text-${task.id}">${category}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="task-complete-indicator" onclick="completeTask('${task.id}')">
+                            ✓
+                        </div>
+                    </div>
+                `}).join('');
+            }
+        }
+
+        // Toggle Slide (Reveal Checkmark)
+        function toggleSlide(taskId) {
+            // Don't slide completed tasks
+            const task = tasks.find(t => t.id === taskId);
+            if (task && task.status === 'done') return;
+
+            const container = document.getElementById(`task-container-${taskId}`);
+            if (container) {
+                container.classList.toggle('revealed');
+            }
+        }
+
+        // Complete Task (Click Checkmark)
+        function completeTask(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            const container = document.getElementById(`task-container-${taskId}`);
+            
+            // Mark as done
+            task.status = 'done';
+            task.progress = 100;
+            
+            // Slide back
+            if(container) {
+                container.classList.remove('revealed');
+            }
+            
+            // Save to storage
+            saveTask(task);
+            
+            // Re-render the tasks list to reflect the change
+            renderTasks();
+        }
+
+        init();
+    </script>
+</body>
+</html>

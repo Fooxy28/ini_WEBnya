@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Tugas - Task & Schedule Management</title>
+    <link rel="stylesheet" href="../../style.css">
+    <!-- Font Awesome for Pencil Icon (using CDN for prototype) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="task-menu-page">
+    <div class="dashboard-container">
+        <header class="app-header task-form-header">
+            <a href="javascript:history.back()" class="back-btn">❮</a>
+            <h2 class="page-title">Detail Tugas</h2>
+            <a id="editBtn" class="edit-btn" title="Edit Tugas">
+                <i class="fas fa-pencil-alt"></i>
+            </a>
+        </header>
+
+        <div id="taskDetail" class="task-form"> <!-- Reusing task-form for consistent spacing -->
+            <!-- Task Name (Doesn't fit the card model well, will style separately) -->
+            <h2 id="taskName" class="detail-page-title">Loading...</h2>
+
+            <!-- Task Group -->
+            <div class="card-input-wrapper">
+                <label>Task Group</label>
+                <div class="card-input">
+                    <div id="taskGroupIcon" class="card-icon"></div>
+                    <span id="taskGroup" class="card-input-value"></span>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="card-input-wrapper">
+                <label>Description</label>
+                <div class="card-input">
+                    <p id="taskDesc" class="card-input-value"></p>
+                </div>
+            </div>
+
+            <!-- Start Date -->
+            <div class="card-input-wrapper">
+                <label>Start Date</label>
+                <div class="card-input">
+                    <div class="card-icon bg-purple">📅</div>
+                    <span id="taskStart" class="card-input-value"></span>
+                </div>
+            </div>
+
+            <!-- End Date -->
+            <div class="card-input-wrapper">
+                <label>End Date</label>
+                <div class="card-input">
+                    <div class="card-icon bg-purple">📅</div>
+                    <span id="taskEnd" class="card-input-value"></span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Delete button removed to match design -->
+    </div>
+
+    <script src="../../script.js"></script>
+    <script>
+        checkAuth();
+
+        const taskId = getUrlParam('id');
+        const task = getTaskById(taskId);
+
+        if (!task) {
+            alert('Tugas tidak ditemukan!');
+            history.back();
+        } else {
+            // Helper to format dates
+            const formatDate = (dateStr) => {
+                const date = new Date(dateStr);
+                // Format: 01 Okt, 2025
+                return `${String(date.getDate()).padStart(2, '0')} ${date.toLocaleString('id-ID', { month: 'short' })}, ${date.getFullYear()}`;
+            };
+            
+            // Helper to get group icon
+            const getGroupIcon = (group) => {
+                switch(String(group).toLowerCase()) {
+                    case 'project': return { icon: '🗂️', color: 'var(--project-bg, #ffe0e0)' };
+                    case 'personal': return { icon: '👤', color: 'var(--personal-bg, #e0e0ff)' };
+                    case 'study': return { icon: '📚', color: 'var(--study-bg, #ffe0cc)' };
+                    default: return { icon: '👜', color: '#f0f0f0' };
+                }
+            };
+
+            const groupInfo = getGroupIcon(task.group);
+            
+            document.getElementById('taskName').textContent = task.name;
+            
+            const groupIconEl = document.getElementById('taskGroupIcon');
+            groupIconEl.textContent = groupInfo.icon;
+            groupIconEl.style.backgroundColor = groupInfo.color;
+            
+            document.getElementById('taskGroup').textContent = task.group;
+            document.getElementById('taskDesc').textContent = task.description || 'Tidak ada deskripsi.';
+            document.getElementById('taskStart').textContent = formatDate(task.start);
+            document.getElementById('taskEnd').textContent = formatDate(task.end);
+
+            // Set Edit Link
+            document.getElementById('editBtn').href = `edittask.html?id=${taskId}`;
+        }
+    </script>
+</body>
+</html>

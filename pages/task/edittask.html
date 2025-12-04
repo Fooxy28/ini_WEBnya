@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Tugas - Task & Schedule Management</title>
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body class="task-menu-page">
+    <div class="dashboard-container">
+        <header class="app-header task-form-header">
+            <a href="javascript:history.back()" class="back-btn">❮</a>
+            <h2 class="page-title">Edit Tugas</h2>
+        </header>
+
+        <form id="editTaskForm" class="task-form">
+                        <!-- Group Selector -->
+                        <div class="card-input-wrapper custom-dropdown-wrapper">
+                            <label for="group">Task Group</label>
+                            <input type="hidden" id="group" name="group"> <!-- Hidden input to store value -->
+                            <div class="card-input select-input custom-dropdown-display">
+                                <div style="display: flex; align-items: center; gap: 15px;">
+                                    <div class="card-icon bg-pink">🗂️</div>
+                                    <span id="selectedGroupText" ></span>
+                                </div>
+                                <span class="dropdown-arrow">▼</span>
+                            </div>
+                            <div class="custom-dropdown-options">
+                                <div class="custom-dropdown-option" data-value="Project">Project</div>
+                                <div class="custom-dropdown-option" data-value="Personal">Personal</div>
+                                <div class="custom-dropdown-option" data-value="Study">Study</div>
+                                <div class="custom-dropdown-option" data-value="Lainnya">Lainnya</div>
+                            </div>
+                        </div>
+            
+                        <!-- Task Name -->
+                        <div class="card-input-wrapper">
+                            <label for="name">Nama Tugas</label>
+                            <div class="card-input">
+                                <input type="text" id="name" name="name" placeholder="Membuat Aplikasi" required>
+                            </div>
+                        </div>
+            
+                        <!-- Description -->
+                        <div class="card-input-wrapper">
+                            <label for="description">Description</label>
+                            <div class="card-input">
+                                <textarea id="description" name="description" placeholder="Membuat aplikasi sederhana..."></textarea>
+                            </div>
+                        </div>
+            
+                        <!-- Start Date -->
+                        <div class="card-input-wrapper">
+                            <label for="start">Start Date</label>
+                            <div class="card-input date-input">
+                                <div class="card-icon bg-purple">📅</div>
+                                <input type="datetime-local" id="start" name="start" required>
+                            </div>
+                        </div>
+            
+                        <!-- End Date -->
+                        <div class="card-input-wrapper">
+                            <label for="end">End Date</label>
+                            <div class="card-input date-input">
+                                <div class="card-icon bg-purple">📅</div>
+                                <input type="datetime-local" id="end" name="end" required>
+                            </div>
+                        </div>
+            
+                        <button type="submit" class="btn btn-block">Simpan Tugas</button>
+                    </form>
+                </div>
+            
+                <script src="../../script.js"></script>
+                <script>
+                    checkAuth();
+            
+                    const taskId = getUrlParam('id');
+                    const task = getTaskById(taskId);
+                    
+                    const dropdownWrapper = document.querySelector('.custom-dropdown-wrapper');
+                    initCustomDropdown(dropdownWrapper);
+            
+                    // Populate form with existing data
+                    if (task) {
+                        document.getElementById('group').value = task.group;
+                        document.getElementById('selectedGroupText').textContent = task.group;
+                        document.getElementById('name').value = task.name;
+                        document.getElementById('description').value = task.description;
+                        document.getElementById('start').value = task.start;
+                        document.getElementById('end').value = task.end;
+                    } else {
+                        alert('Tugas tidak ditemukan!');
+                        history.back();
+                    }
+            
+                    // Handle form submission
+                    document.getElementById('editTaskForm').addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        
+                        const updatedTask = {
+                            id: taskId, // Keep the original ID
+                            group: document.getElementById('group').value,
+                            name: document.getElementById('name').value,
+                            description: document.getElementById('description').value,
+                            start: document.getElementById('start').value,
+                            end: document.getElementById('end').value,
+                            progress: task.progress, // Preserve original progress
+                            status: task.status // Preserve original status
+                        };
+            
+                        saveTask(updatedTask);
+                        alert('Tugas berhasil diperbarui!');
+                        window.location.href = `detailtask.html?id=${taskId}`; // Redirect back to detail page
+                    });
+                </script>
+            </body>
+            </html>
+            

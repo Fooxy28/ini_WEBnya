@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Task & Schedule Management</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h2>Profile</h2>
+            <nav>
+                <a href="home.html" class="nav-link">Home</a>
+                <a href="profile.html" class="nav-link text-bold">Profile</a>
+            </nav>
+        </header>
+
+        <div class="profile-avatar-container">
+            <div class="profile-avatar">
+                <span id="avatarInitial">U</span>
+            </div>
+            <h3 id="usernameDisplay">Loading...</h3>
+            <p>Mahasiswa</p>
+        </div>
+
+        <div class="item-list">
+            <div class="item-card">
+                <div class="item-header">
+                    <span class="item-title">Pengaturan Akun</span>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-header">
+                    <span class="item-title">Notifikasi</span>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-header">
+                    <span class="item-title">Bantuan</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-30">
+            <button id="logoutBtn" class="btn btn-danger btn-block">Keluar</button>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        checkAuth();
+
+        const userJson = sessionStorage.getItem('currentUser');
+        if (userJson) {
+            const user = JSON.parse(userJson);
+            document.getElementById('usernameDisplay').textContent = user.username;
+            document.getElementById('avatarInitial').textContent = user.username.charAt(0).toUpperCase();
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            logout();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Task & Schedule Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-logo"></div>
+        <h1 class="login-title">Login</h1>
+        
+        <form id="loginForm">
+            <div class="login-input-group">
+                <input type="text" id="username" name="username" class="login-input" placeholder="Username" required>
+            </div>
+            <div class="login-input-group">
+                <input type="password" id="password" name="password" class="login-input" placeholder="Password" required>
+            </div>
+            <button type="submit" class="login-btn">Masuk</button>
+        </form>
+
+        <p class="login-footer">
+            Tidak Punya Akun? <a href="pages/register.html">Daftar</a>
+        </p>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if(login(username, password)) {
+                window.location.href = 'pages/home.html';
+            } else {
+                alert('Login gagal!');
+            }
+        });
+    </script>
+</body>
+</html>

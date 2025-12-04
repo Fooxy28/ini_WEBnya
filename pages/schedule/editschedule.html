@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Jadwal - Task & Schedule Management</title>
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body class="task-menu-page">
+    <div class="dashboard-container">
+        <header class="app-header task-form-header">
+            <a href="javascript:history.back()" class="back-btn">❮</a>
+            <h2 class="page-title">Edit Jadwal</h2>
+        </header>
+
+        <form id="editScheduleForm" class="task-form">
+            <!-- Schedule Name -->
+            <div class="card-input-wrapper">
+                <label for="name">Nama Jadwal</label>
+                <div class="card-input">
+                    <input type="text" id="name" name="name" placeholder="Evaluasi Perangkat Lunak" required>
+                </div>
+            </div>
+
+            <!-- Note -->
+            <div class="card-input-wrapper">
+                <label for="note">Note</label>
+                <div class="card-input">
+                    <textarea id="note" name="note" placeholder="Membahas progres..."></textarea>
+                </div>
+            </div>
+
+            <!-- Start Date -->
+            <div class="card-input-wrapper">
+                <label for="start">Start Date</label>
+                <div class="card-input date-input">
+                    <div class="card-icon bg-purple">📅</div>
+                    <input type="datetime-local" id="start" name="start" required>
+                </div>
+            </div>
+
+            <!-- End Date -->
+            <div class="card-input-wrapper">
+                <label for="end">End Date</label>
+                <div class="card-input date-input">
+                    <div class="card-icon bg-purple">📅</div>
+                    <input type="datetime-local" id="end" name="end" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-block">Simpan Jadwal</button>
+        </form>
+    </div>
+
+    <script src="../../script.js"></script>
+    <script>
+        checkAuth();
+
+        const scheduleId = getUrlParam('id');
+        const schedule = getScheduleById(scheduleId);
+
+        // Populate form with existing data
+        if (schedule) {
+            document.getElementById('name').value = schedule.name;
+            document.getElementById('note').value = schedule.note;
+            document.getElementById('start').value = schedule.start;
+            document.getElementById('end').value = schedule.end;
+        } else {
+            alert('Jadwal tidak ditemukan!');
+            history.back();
+        }
+
+        // Handle form submission
+        document.getElementById('editScheduleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const updatedSchedule = {
+                id: scheduleId, // Keep the original ID
+                name: document.getElementById('name').value,
+                note: document.getElementById('note').value,
+                start: document.getElementById('start').value,
+                end: document.getElementById('end').value
+            };
+
+            saveSchedule(updatedSchedule);
+            alert('Jadwal berhasil diperbarui!');
+            window.location.href = `detailschedule.html?id=${scheduleId}`; // Redirect back to detail page
+        });
+    </script>
+</body>
+</html>

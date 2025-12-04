@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Task & Schedule Management</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <h1 class="login-title">Daftar</h1>
+        
+        <form id="registerForm" class="auth-form mt-0">
+            <div class="login-input-group">
+                <input type="text" id="username" name="username" class="login-input" placeholder="Username" required>
+            </div>
+            <div class="login-input-group">
+                <input type="text" id="account" name="account" class="login-input" placeholder="Account" required>
+            </div>
+            <div class="login-input-group">
+                <input type="password" id="password" name="password" class="login-input" placeholder="Password" required>
+            </div>
+            <div class="login-input-group">
+                <input type="password" id="confirmPassword" name="confirmPassword" class="login-input" placeholder="Confirm Password" required>
+            </div>
+            
+            <div class="login-checkbox-container">
+                <input type="checkbox" id="terms" name="terms" required class="login-checkbox">
+                <label for="terms" class="login-checkbox-label">syarat dan ketentuan</label>
+            </div>
+
+            <button type="submit" class="login-btn">Daftar</button>
+        </form>
+
+        <div class="login-footer">
+            Sudah punya akun? <a href="../index.html">Login</a>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Dummy registration
+            alert('Registrasi berhasil! Silakan login.');
+            window.location.href = '../index.html';
+        });
+    </script>
+</body>
+</html>
