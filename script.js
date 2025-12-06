@@ -33,6 +33,26 @@ function initData() {
                 end: '2025-12-06T17:00',
                 status: 'done',
                 progress: 100
+            },
+            {
+                id: 't4',
+                group: 'Kuliah',
+                name: 'Belajar EDPL',
+                description: 'Mempelajari materi untuk persiapan UAS.',
+                start: '2025-12-06T19:00',
+                end: '2025-12-06T21:00',
+                status: 'todo',
+                progress: 0
+            },
+            {
+                id: 't5',
+                group: 'Pribadi',
+                name: 'Jogging',
+                description: 'Lari pagi di sekitaran kos.',
+                start: '2025-12-07T06:00',
+                end: '2025-12-07T07:00',
+                status: 'todo',
+                progress: 0
             }
         ];
         sessionStorage.setItem('tasks', JSON.stringify(dummyTasks));
@@ -46,6 +66,20 @@ function initData() {
                 note: 'Membahas proker bulan depan.',
                 start: '2025-12-04T14:00',
                 end: '2025-12-04T16:00'
+            },
+            {
+                id: 's2',
+                name: 'Kelas EDPL',
+                note: 'Presentasi tugas kelompok.',
+                start: '2025-12-05T10:00',
+                end: '2025-12-05T12:00'
+            },
+            {
+                id: 's3',
+                name: 'Tutor Sebaya',
+                note: 'Membahas materi kalkulus.',
+                start: '2025-12-08T15:00',
+                end: '2025-12-08T17:00'
             }
         ];
         sessionStorage.setItem('schedules', JSON.stringify(dummySchedules));
