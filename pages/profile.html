@@ -3,48 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - Task & Schedule Management</title>
+    <title>Profil - Task & Schedule Management</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-    <div class="container">
-        <header class="app-header">
-            <h2>Profile</h2>
-            <nav>
-                <a href="home.html" class="nav-link">Home</a>
-                <a href="profile.html" class="nav-link text-bold">Profile</a>
-            </nav>
+<body class="profile-page">
+    <div class="dashboard-container">
+        <header class="app-header profile-header">
+            <a href="home.html" class="back-btn">❮</a>
+            <h2 class="page-title">My Profile</h2>
+            <div class="notification-icon" style="visibility: hidden;">
+                🔔
+                <div class="notification-dot"></div>
+            </div>
         </header>
 
-        <div class="profile-avatar-container">
-            <div class="profile-avatar">
-                <span id="avatarInitial">U</span>
+        <main class="profile-main">
+            <div class="profile-avatar-large">
+                <img src="https://ui-avatars.com/api/?name=Cat+Nip&background=random&size=128" alt="Avatar" id="avatarImg">
             </div>
-            <h3 id="usernameDisplay">Loading...</h3>
-            <p>Mahasiswa</p>
-        </div>
+            
+            <div class="profile-name-container">
+                <h1 id="usernameDisplay" class="profile-name">Cat Nip</h1>
+                <a href="editprofile.html" class="edit-icon-profile">
+                    <i class="fas fa-pencil-alt"></i>
+                </a>
+            </div>
+            <p id="emailDisplay" class="profile-email">kucingkecil96@gmail.com</p>
 
-        <div class="item-list">
-            <div class="item-card">
-                <div class="item-header">
-                    <span class="item-title">Pengaturan Akun</span>
+            <div class="settings-section">
+                <div class="settings-item">
+                    <span class="setting-label">Tanggal Lahir</span>
+                    <span id="birthdateDisplay" class="setting-value">01 - 09 - 2007</span>
+                </div>
+                <div class="settings-item">
+                    <span class="setting-label">Jenis Kelamin</span>
+                    <span id="genderDisplay" class="setting-value">Laki - Laki</span>
                 </div>
             </div>
-            <div class="item-card">
-                <div class="item-header">
-                    <span class="item-title">Notifikasi</span>
+            
+            <div class="settings-section" style="margin-top: 20px;">
+                <h3 class="settings-title">
+                    <i class="fas fa-cog settings-icon"></i>
+                    Pengaturan
+                </h3>
+                <div class="settings-item">
+                    <span class="setting-label">Bahasa</span>
+                    <span id="languageDisplay" class="setting-value">Indonesia</span>
+                </div>
+                <div class="settings-item">
+                    <span class="setting-label">Format Waktu</span>
+                    <span id="timeformatDisplay" class="setting-value">24 jam</span>
                 </div>
             </div>
-            <div class="item-card">
-                <div class="item-header">
-                    <span class="item-title">Bantuan</span>
-                </div>
+            
+            <div class="mt-30">
+                <button id="logoutBtn" class="btn btn-danger btn-block">Keluar</button>
             </div>
-        </div>
-
-        <div class="mt-30">
-            <button id="logoutBtn" class="btn btn-danger btn-block">Keluar</button>
-        </div>
+        </main>
     </div>
 
     <script src="../script.js"></script>
@@ -55,7 +71,15 @@
         if (userJson) {
             const user = JSON.parse(userJson);
             document.getElementById('usernameDisplay').textContent = user.username;
-            document.getElementById('avatarInitial').textContent = user.username.charAt(0).toUpperCase();
+            document.getElementById('emailDisplay').textContent = user.email; 
+            document.getElementById('birthdateDisplay').textContent = user.birthdate || 'Belum diatur';
+            document.getElementById('genderDisplay').textContent = user.gender || 'Belum diatur';
+            
+            const avatarImg = document.getElementById('avatarImg');
+            avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&background=random&size=128`;
+            
+        } else {
+            window.location.href = '../index.html';
         }
 
         document.getElementById('logoutBtn').addEventListener('click', function() {

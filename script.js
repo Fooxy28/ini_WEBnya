@@ -167,11 +167,18 @@ function deleteSchedule(id) {
 
 // --- AUTH FUNCTIONS (Dummy) ---
 function login(username, password) {
-    if (username && password) {
-        sessionStorage.setItem('currentUser', JSON.stringify({ username: username }));
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.username === username && u.password === password);
+    if (user) {
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
         return true;
     }
     return false;
+}
+
+function getCurrentUser() {
+    const userJson = sessionStorage.getItem('currentUser');
+    return userJson ? JSON.parse(userJson) : null;
 }
 
 function logout() {
@@ -195,11 +202,11 @@ function checkAuth() {
 // Initialize on load
 initData();
 
-function initCustomDropdown(wrapper) {
+function initCustomDropdown(wrapper, inputId, textId) {
     const display = wrapper.querySelector('.custom-dropdown-display');
     const optionsContainer = wrapper.querySelector('.custom-dropdown-options');
-    const hiddenInput = wrapper.querySelector('input[type="hidden"]');
-    const textDisplay = wrapper.querySelector('span[id^="selected"]'); // e.g., selectedGroupText
+    const hiddenInput = inputId ? document.getElementById(inputId) : wrapper.querySelector('input[type="hidden"]');
+    const textDisplay = textId ? document.getElementById(textId) : wrapper.querySelector('span[id^="selected"]');
 
     if (!display || !optionsContainer || !hiddenInput || !textDisplay) return;
 

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profil - Task & Schedule Management</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="task-menu-page">
+    <div class="dashboard-container">
+        <header class="app-header task-form-header">
+            <a href="javascript:history.back()" class="back-btn">❮</a>
+            <h2 class="page-title">Edit Profil</h2>
+        </header>
+
+        <form id="editProfileForm" class="task-form">
+            <!-- Username -->
+            <div class="card-input-wrapper">
+                <label for="username">Username</label>
+                <div class="card-input">
+                    <input type="text" id="username" name="username" placeholder="e.g. John Doe" required>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="card-input-wrapper">
+                <label for="email">Email</label>
+                <div class="card-input">
+                    <input type="email" id="email" name="email" placeholder="e.g. john@example.com" required>
+                </div>
+            </div>
+
+            <!-- Tanggal Lahir -->
+            <div class="card-input-wrapper">
+                <label for="birthdate">Tanggal Lahir</label>
+                <div class="card-input date-input">
+                    <div class="card-icon bg-purple">📅</div>
+                    <input type="date" id="birthdate" name="birthdate" required>
+                </div>
+            </div>
+
+            <!-- Jenis Kelamin -->
+            <div class="card-input-wrapper custom-dropdown-wrapper">
+                <label for="gender">Jenis Kelamin</label>
+                <input type="hidden" id="gender" name="gender">
+                <div class="card-input select-input custom-dropdown-display">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div class="card-icon bg-pink">♀️♂️</div>
+                        <span id="selectedGenderText">Pilih Jenis Kelamin</span>
+                    </div>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="custom-dropdown-options">
+                    <div class="custom-dropdown-option" data-value="Laki-laki">Laki-laki</div>
+                    <div class="custom-dropdown-option" data-value="Perempuan">Perempuan</div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-block">Simpan Perubahan</button>
+        </form>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        checkAuth();
+
+        const user = getCurrentUser();
+
+        // Initialize custom dropdown for gender
+        const dropdownWrapper = document.querySelector('.custom-dropdown-wrapper');
+        initCustomDropdown(dropdownWrapper, 'gender', 'selectedGenderText');
+        
+        // Populate form with existing data
+        if (user) {
+            document.getElementById('username').value = user.username;
+            document.getElementById('email').value = user.email;
+            document.getElementById('birthdate').value = user.birthdate || ''; // Handle case where birthdate might not be set
+            
+            // Set gender
+            const gender = user.gender || 'Pilih Jenis Kelamin';
+            document.getElementById('gender').value = gender;
+            document.getElementById('selectedGenderText').textContent = gender;
+
+        } else {
+            // This should not happen if checkAuth() is working
+            alert('User tidak ditemukan!');
+            window.location.href = '../index.html';
+        }
+
+        // Handle form submission
+        document.getElementById('editProfileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const updatedUser = {
+                ...user, // a
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                birthdate: document.getElementById('birthdate').value,
+                gender: document.getElementById('gender').value
+            };
+
+            // In a real app, you would have a specific function to update user data
+            // For this demo, we can adapt the session storage logic
+            sessionStorage.setItem('currentUser', JSON.stringify(updatedUser));
+
+            // Also update the main users array in localStorage
+            const allUsers = JSON.parse(localStorage.getItem('users')) || [];
+            const userIndex = allUsers.findIndex(u => u.email === user.email); // Find user by original email
+            if (userIndex > -1) {
+                allUsers[userIndex] = updatedUser;
+                localStorage.setItem('users', JSON.stringify(allUsers));
+            }
+
+
+            alert('Profil berhasil diperbarui!');
+            window.location.href = 'profile.html'; // Redirect back to profile page
+        });
+    </script>
+</body>
+</html>

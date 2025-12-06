@@ -11,15 +11,7 @@
     <div class="dashboard-container">
         <!-- Header -->
         <header class="dashboard-header">
-            <div class="user-profile">
-                <div class="avatar">
-                    <img src="https://ui-avatars.com/api/?name=Cat+Nip&background=random" alt="Avatar" class="w-100-h-100-rounded">
-                </div>
-                <div class="user-info">
-                    <span class="greeting">Hello!</span>
-                    <span class="username">Cat Nip</span>
-                </div>
-            </div>
+            <a href="javascript:history.back()" class="back-btn-dashboard">❮</a>
             <div class="notification-icon">
                 🔔
                 <div class="notification-dot"></div>
@@ -30,7 +22,7 @@
         <div class="task-menu-header">
             <div class="task-menu-title">
                 <div class="task-icon-large">
-                    +
+                    📋
                 </div>
                 <div>
                     <h2 class="task-title">Tugas</h2>
@@ -42,7 +34,7 @@
                 <div class="group-select-wrapper custom-dropdown-wrapper">
                     <div class="group-dropdown custom-dropdown-display" id="groupDropdown">
                         <div class="group-dropdown-inner">
-                            <div class="card-icon bg-pink group-icon">👜</div>
+                            <div class="card-icon bg-pink group-icon">📋</div>
                             <div>
                                 <small class="text-muted group-small">Task Group</small>
                                 <span class="group-name" id="selectedGroupName">Semua Group</span>
@@ -179,7 +171,7 @@
                 case 'project': return '🗂️';
                 case 'personal': return '👤';
                 case 'study': return '📚';
-                default: return '👜';
+                default: return '📋';
             }
         }
 

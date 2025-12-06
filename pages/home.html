@@ -10,15 +10,15 @@
     <div class="dashboard-container">
         <!-- Header -->
         <header class="dashboard-header">
-            <div class="user-profile">
+            <a href="profile.html" class="user-profile" style="text-decoration: none; color: inherit;">
                 <div class="avatar">
-                    <img src="https://ui-avatars.com/api/?name=Cat+Nip&background=random" alt="Avatar" class="w-100-h-100-rounded">
+                    <img src="https://ui-avatars.com/api/?name=Cat+Nip&background=random" alt="Avatar" class="w-100-h-100-rounded" id="home-avatar">
                 </div>
                 <div class="user-info">
                     <span class="greeting">Hello!</span>
-                    <span class="username">Cat Nip</span>
+                    <span class="username" id="home-username">Cat Nip</span>
                 </div>
-            </div>
+            </a>
             <div class="notification-icon">
                 🔔
                 <div class="notification-dot"></div>
@@ -84,7 +84,7 @@
             <section class="tasks-column">
                 <div class="section-header">
                     <div class="flex-center-gap">
-                        <span class="font-1-5">+</span>
+                        <span class="font-1-5">📋</span>
                         <h3>Tugas <small class="text-muted text-small-normal">My Task's</small></h3>
                     </div>
                     <a href="task/addtask.html" class="add-btn">+</a>
@@ -109,6 +109,14 @@
     <script>
         // Check Auth
         checkAuth();
+
+        // Populate user info
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+            document.getElementById('home-username').textContent = currentUser.username;
+            const avatarImg = document.getElementById('home-avatar');
+            avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.username)}&background=random`;
+        }
 
         // Global State for Calendar
         let savedDate = sessionStorage.getItem('selectedCalendarDate');
@@ -207,7 +215,7 @@
                         
                         return `
                         <div class="card-item ${colorClass}">
-                            <div class="card-icon bg-white">📝</div>
+                            <div class="card-icon bg-white">📋</div>
                             <div class="card-content">
                                 <small>${task.group || 'General'}</small>
                                 <h5>${task.name}</h5>
@@ -355,7 +363,7 @@
                     if (category === 'Selesai') { statusClass = 'status-done'; }
                     
                     const group = task.group || 'General';
-                    const groupIcon = '👜';
+                    const groupIcon = '📋';
 
                     const date = new Date(task.end);
                     const formattedDate = `${date.getDate()}/${date.toLocaleString('id-ID', { month: 'short' })}/${String(date.getFullYear()).slice(-2)}`;
