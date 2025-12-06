@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Jadwal - Task & Schedule Management</title>
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body class="task-menu-page">
     <div class="dashboard-container">
@@ -52,40 +52,9 @@
         </form>
     </div>
 
-    <script src="../../script.js"></script>
-    <script>
-        checkAuth();
-
-        const scheduleId = getUrlParam('id');
-        const schedule = getScheduleById(scheduleId);
-
-        // Populate form with existing data
-        if (schedule) {
-            document.getElementById('name').value = schedule.name;
-            document.getElementById('note').value = schedule.note;
-            document.getElementById('start').value = schedule.start;
-            document.getElementById('end').value = schedule.end;
-        } else {
-            alert('Jadwal tidak ditemukan!');
-            history.back();
-        }
-
-        // Handle form submission
-        document.getElementById('editScheduleForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const updatedSchedule = {
-                id: scheduleId, // Keep the original ID
-                name: document.getElementById('name').value,
-                note: document.getElementById('note').value,
-                start: document.getElementById('start').value,
-                end: document.getElementById('end').value
-            };
-
-            saveSchedule(updatedSchedule);
-            alert('Jadwal berhasil diperbarui!');
-            window.location.href = `detailschedule.html?id=${scheduleId}`; // Redirect back to detail page
-        });
-    </script>
+    <!-- Main Script -->
+    <script src="../../assets/js/script.js"></script>
+    <!-- Page Specific Script -->
+    <script src="../../assets/js/editschedule.js"></script>
 </body>
 </html>

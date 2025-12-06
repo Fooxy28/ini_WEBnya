@@ -1601,3 +1601,8 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 .back-btn-dashboard:hover {
     background-color: #e0e0e0;
 }
+/* Utility Classes extracted from inline styles */
+.user-profile-link {
+    text-decoration: none;
+    color: inherit;
+}

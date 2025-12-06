@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Tugas - Task & Schedule Management</title>
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <!-- Font Awesome for Pencil Icon (using CDN for prototype) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -61,9 +61,12 @@
         <!-- Delete button removed to match design -->
     </div>
 
-    <script src="../../script.js"></script>
-    <script>
-        checkAuth();
+    <!-- Main Script -->
+    <script src="../../assets/js/script.js"></script>
+    <!-- Page Specific Script -->
+    <script src="../../assets/js/detailtask.js"></script>
+</body>
+</html>
 
         const taskId = getUrlParam('id');
         const task = getTaskById(taskId);

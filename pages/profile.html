@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil - Task & Schedule Management</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="profile-page">
@@ -63,28 +63,9 @@
         </main>
     </div>
 
-    <script src="../script.js"></script>
-    <script>
-        checkAuth();
-
-        const userJson = sessionStorage.getItem('currentUser');
-        if (userJson) {
-            const user = JSON.parse(userJson);
-            document.getElementById('usernameDisplay').textContent = user.username;
-            document.getElementById('emailDisplay').textContent = user.email; 
-            document.getElementById('birthdateDisplay').textContent = user.birthdate || 'Belum diatur';
-            document.getElementById('genderDisplay').textContent = user.gender || 'Belum diatur';
-            
-            const avatarImg = document.getElementById('avatarImg');
-            avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&background=random&size=128`;
-            
-        } else {
-            window.location.href = '../index.html';
-        }
-
-        document.getElementById('logoutBtn').addEventListener('click', function() {
-            logout();
-        });
-    </script>
+    <!-- Main Script -->
+    <script src="../assets/js/script.js"></script>
+    <!-- Page Specific Script -->
+    <script src="../assets/js/profile.js"></script>
 </body>
 </html>

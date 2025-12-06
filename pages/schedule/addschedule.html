@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Jadwal - Task & Schedule Management</title>
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body class="task-menu-page">
     <div class="dashboard-container">
@@ -52,9 +52,12 @@
         </form>
     </div>
 
-    <script src="../../script.js"></script>
-    <script>
-        checkAuth();
+    <!-- Main Script -->
+    <script src="../../assets/js/script.js"></script>
+    <!-- Page Specific Script -->
+    <script src="../../assets/js/addschedule.js"></script>
+</body>
+</html>
 
         // Check for a date passed from the home page calendar via sessionStorage
         const savedDateStr = sessionStorage.getItem('selectedCalendarDate');

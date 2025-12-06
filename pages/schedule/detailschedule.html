@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Jadwal - Task & Schedule Management</title>
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="task-menu-page">
@@ -56,31 +56,9 @@
         <!-- Delete button removed to match design -->
     </div>
 
-    <script src="../../script.js"></script>
-    <script>
-        checkAuth();
-
-        const scheduleId = getUrlParam('id');
-        const schedule = getScheduleById(scheduleId);
-
-        if (!schedule) {
-            alert('Jadwal tidak ditemukan!');
-            history.back();
-        } else {
-            // Helper to format dates
-            const formatDate = (dateStr) => {
-                const date = new Date(dateStr);
-                return `${String(date.getDate()).padStart(2, '0')} ${date.toLocaleString('id-ID', { month: 'short' })}, ${date.getFullYear()}`;
-            };
-            
-            document.getElementById('scheduleName').textContent = schedule.name;
-            document.getElementById('scheduleNote').textContent = schedule.note || 'Tidak ada catatan.';
-            document.getElementById('scheduleStart').textContent = formatDate(schedule.start);
-            document.getElementById('scheduleEnd').textContent = formatDate(schedule.end);
-
-            // Set Edit Link
-            document.getElementById('editBtn').href = `editschedule.html?id=${scheduleId}`;
-        }
-    </script>
+    <!-- Main Script -->
+    <script src="../../assets/js/script.js"></script>
+    <!-- Page Specific Script -->
+    <script src="../../assets/js/detailschedule.js"></script>
 </body>
 </html>

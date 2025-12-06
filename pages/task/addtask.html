@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Tugas - Task & Schedule Management</title>
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body class="task-menu-page">
     <div class="dashboard-container">
@@ -71,29 +71,9 @@
         </form>
     </div>
 
-    <script src="../../script.js"></script>
-    <script>
-        checkAuth();
-
-        // Initialize custom dropdown
-        const dropdownWrapper = document.querySelector('.custom-dropdown-wrapper');
-        initCustomDropdown(dropdownWrapper);
-
-        document.getElementById('addTaskForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const newTask = {
-                group: document.getElementById('group').value,
-                name: document.getElementById('name').value,
-                description: document.getElementById('description').value,
-                start: document.getElementById('start').value,
-                end: document.getElementById('end').value
-            };
-
-            saveTask(newTask);
-            alert('Tugas berhasil ditambahkan!');
-            window.location.href = 'taskmenu.html';
-        });
-    </script>
+    <!-- Main Script -->
+    <script src="../../assets/js/script.js"></script>
+    <!-- Page Specific Script -->
+    <script src="../../assets/js/addtask.js"></script>
 </body>
 </html>
