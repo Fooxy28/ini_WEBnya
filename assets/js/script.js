@@ -532,55 +532,6 @@ function checkAuth() {
 }
 
 // ============================================
-// CUSTOM DROPDOWN INITIALIZATION
-// ============================================
-
-/**
- * Fungsi untuk inisialisasi custom dropdown
- * Digunakan untuk dropdown yang memiliki styling custom
- * @param {HTMLElement} wrapper - Element wrapper dropdown
- * @param {string} inputId - ID dari hidden input (optional)
- * @param {string} textId - ID dari element text display (optional)
- */
-function initCustomDropdown(wrapper, inputId, textId) {
-    // Ambil elemen-elemen yang diperlukan
-    const display = wrapper.querySelector('.custom-dropdown-display');
-    const optionsContainer = wrapper.querySelector('.custom-dropdown-options');
-    const hiddenInput = inputId ? document.getElementById(inputId) : wrapper.querySelector('input[type="hidden"]');
-    const textDisplay = textId ? document.getElementById(textId) : wrapper.querySelector('span[id^="selected"]');
-
-    // Validasi: pastikan semua elemen ada
-    if (!display || !optionsContainer || !hiddenInput || !textDisplay) return;
-
-    // Event listener untuk membuka/menutup dropdown
-    display.addEventListener('click', () => {
-        wrapper.classList.toggle('open');
-    });
-
-    // Event listener untuk memilih option
-    optionsContainer.addEventListener('click', (e) => {
-        if (e.target.classList.contains('custom-dropdown-option')) {
-            const selectedValue = e.target.getAttribute('data-value');
-            const selectedText = e.target.textContent;
-
-            // Update tampilan dan nilai
-            textDisplay.textContent = selectedText;
-            hiddenInput.value = selectedValue;
-            
-            // Tutup dropdown
-            wrapper.classList.remove('open');
-        }
-    });
-
-    // Event listener untuk menutup dropdown saat klik di luar
-    document.addEventListener('click', (e) => {
-        if (!wrapper.contains(e.target)) {
-            wrapper.classList.remove('open');
-        }
-    });
-}
-
-// ============================================
 // AUTO-INITIALIZE ON LOAD
 // ============================================
 

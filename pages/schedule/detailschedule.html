@@ -53,7 +53,22 @@
             </div>
         </div>
         
+        <div class="mt-30">
+            <button id="deleteBtn" class="btn btn-danger btn-block">Hapus Jadwal</button>
+        </div>
+        
         <!-- Delete button removed to match design -->
+
+    <!-- Custom Confirmation Modal -->
+    <div id="confirmModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Konfirmasi Hapus</h3>
+            <p>Apakah Anda yakin ingin menghapus jadwal ini? Tindakan ini tidak dapat dibatalkan.</p>
+            <div class="modal-actions">
+                <button id="cancelDeleteBtn" class="btn btn-secondary">Batal</button>
+                <button id="confirmDeleteBtn" class="btn btn-danger">Hapus</button>
+            </div>
+        </div>
     </div>
 
     <!-- Main Script -->

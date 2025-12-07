@@ -50,3 +50,56 @@ if (!schedule) {
     // Set link untuk tombol edit
     document.getElementById('editBtn').href = `editschedule.html?id=${scheduleId}`;
 }
+
+// ============================================
+// DELETE SCHEDULE FUNCTIONALITY
+// ============================================
+
+const deleteBtn = document.getElementById('deleteBtn');
+const confirmModal = document.getElementById('confirmModal');
+const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+// Function to show the modal
+function showModal() {
+    confirmModal.style.display = 'flex';
+    setTimeout(() => confirmModal.classList.add('show'), 10);
+}
+
+// Function to hide the modal
+function hideModal() {
+    confirmModal.classList.remove('show');
+    setTimeout(() => confirmModal.style.display = 'none', 300);
+}
+
+if (deleteBtn && confirmModal) {
+    // Show modal when delete button is clicked
+    deleteBtn.addEventListener('click', showModal);
+
+    // Hide modal when cancel button is clicked
+    cancelDeleteBtn.addEventListener('click', hideModal);
+
+    // Hide modal when clicking on the overlay
+    confirmModal.addEventListener('click', (e) => {
+        if (e.target === confirmModal) {
+            hideModal();
+        }
+    });
+
+    // Handle the final delete confirmation
+    confirmDeleteBtn.addEventListener('click', () => {
+        // Hapus jadwal menggunakan fungsi global
+        deleteSchedule(scheduleId);
+        
+        // Sembunyikan modal
+        hideModal();
+        
+        // Tampilkan notifikasi sukses
+        toastSuccess('Jadwal berhasil dihapus!', 'Success');
+        
+        // Redirect ke halaman utama setelah 1 detik
+        setTimeout(() => {
+            window.location.href = '../home.html';
+        }, 1000);
+    });
+}

@@ -48,6 +48,40 @@
                 </div>
             </div>
 
+            <!-- Repeat Options -->
+            <div class="card-input-wrapper">
+                <label for="repeat">Ulangi Jadwal</label>
+                <div id="repeatDropdown" class="custom-dropdown-wrapper card-input select-input">
+                    <div class="custom-dropdown-display">
+                        <div class="dropdown-content">
+                            <div class="card-icon bg-green">🔄</div>
+                            <span id="selectedRepeatText">Jangan Ulangi</span>
+                        </div>
+                        <div class="dropdown-arrow">▼</div>
+                    </div>
+                    <div class="custom-dropdown-options">
+                        <div class="custom-dropdown-option" data-value="none">Jangan Ulangi</div>
+                        <div class="custom-dropdown-option" data-value="daily">Ulangi Setiap Hari</div>
+                        <div class="custom-dropdown-option" data-value="weekly">Ulangi Setiap Minggu</div>
+                    </div>
+                    <input type="hidden" id="repeat" name="repeat" value="none">
+                </div>
+            </div>
+
+            <!-- Day Picker for Daily Repeat (Hidden by default) -->
+            <div id="dayPickerWrapper" class="card-input-wrapper hidden-select">
+                <label>Pilih Hari</label>
+                <div class="day-picker-container">
+                    <label class="day-checkbox-label"><input type="checkbox" name="day" value="1"> Sen</label>
+                    <label class="day-checkbox-label"><input type="checkbox" name="day" value="2"> Sel</label>
+                    <label class="day-checkbox-label"><input type="checkbox" name="day" value="3"> Rab</label>
+                    <label class="day-checkbox-label"><input type="checkbox" name="day" value="4"> Kam</label>
+                    <label class="day-checkbox-label"><input type="checkbox" name="day" value="5"> Jum</label>
+                    <label class="day-checkbox-label"><input type="checkbox" name="day" value="6"> Sab</label>
+                    <label class="day-checkbox-label"><input type="checkbox" name="day" value="0"> Min</label>
+                </div>
+            </div>
+
             <button type="submit" class="btn btn-block">Tambah Jadwal</button>
         </form>
     </div>
@@ -57,47 +91,5 @@
     <script src="../../assets/js/script.js"></script>
     <!-- Page Specific Script -->
     <script src="../../assets/js/addschedule.js"></script>
-</body>
-</html>
-
-        // Check for a date passed from the home page calendar via sessionStorage
-        const savedDateStr = sessionStorage.getItem('selectedCalendarDate');
-        const now = new Date();
-        let initialDate = now;
-
-        if (savedDateStr) {
-            // Use the date from sessionStorage, but the time from right now
-            const savedDate = new Date(savedDateStr);
-            savedDate.setHours(now.getHours());
-            savedDate.setMinutes(now.getMinutes());
-            initialDate = savedDate;
-        }
-
-        // Format the date for the input field
-        const year = initialDate.getFullYear();
-        const month = String(initialDate.getMonth() + 1).padStart(2, '0');
-        const day = String(initialDate.getDate()).padStart(2, '0');
-        const hours = String(initialDate.getHours()).padStart(2, '0');
-        const minutes = String(initialDate.getMinutes()).padStart(2, '0');
-        const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
-
-        // Set the value
-        document.getElementById('start').value = formattedDateTime;
-
-        document.getElementById('addScheduleForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const newSchedule = {
-                name: document.getElementById('name').value,
-                note: document.getElementById('note').value,
-                start: document.getElementById('start').value,
-                end: document.getElementById('end').value
-            };
-
-            saveSchedule(newSchedule);
-            alert('Jadwal berhasil ditambahkan!');
-            window.location.href = '../home.html';
-        });
-    </script>
 </body>
 </html>
