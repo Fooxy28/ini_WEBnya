@@ -1965,3 +1965,170 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     text-decoration: none;
     color: inherit;
 }
+
+/* ============================================
+   RESPONSIVE DESIGN - MOBILE & TABLET
+   ============================================ */
+
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+    }
+
+    .dashboard-container {
+        padding: 15px;
+    }
+
+    /* Header */
+    .dashboard-header {
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .user-profile {
+        gap: 10px;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    .username {
+        font-size: 1rem;
+    }
+
+    /* Progress Overview */
+    .daily-progress-card {
+        min-width: unset;
+        width: 100%;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .progress-circle {
+        width: 60px;
+        height: 60px;
+    }
+
+    .progress-circle::before {
+        width: 50px;
+        height: 50px;
+    }
+
+    .progress-text {
+        font-size: 1rem;
+    }
+
+    .daily-info h4 {
+        font-size: 1rem;
+    }
+
+    .in-progress-header h4 {
+        font-size: 1.1rem;
+    }
+
+    /* Task Menu */
+    .task-menu-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .task-menu-page .task-menu-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .task-menu-page .group-dropdown {
+        min-width: unset;
+        flex-grow: 1;
+    }
+
+    .task-menu-page .task-title {
+        font-size: 2rem;
+    }
+
+    .task-menu-page .filter-btn {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+
+    /* Calendar */
+    .calendar-strip h3 {
+        font-size: 1.2rem;
+    }
+    .date-item {
+        min-width: 55px;
+        padding: 12px 8px;
+    }
+
+    /* Section Headers */
+    .section-header h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Forms */
+    .task-form {
+        gap: 20px;
+    }
+
+    .card-input {
+        padding: 12px 40px 12px 15px;
+    }
+
+    .card-input input, .card-input select, .card-input textarea {
+        font-size: 1rem;
+    }
+
+    .task-form .btn-block {
+        width: 100%;
+    }
+
+    /* Login/Register */
+    .login-container {
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    /* Profile Page */
+    .profile-avatar-large {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-name {
+        font-size: 1.5rem;
+    }
+
+    .profile-email {
+        margin-bottom: 20px;
+    }
+
+    .profile-details, .settings-section {
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    /* Notifications */
+    .notification-dropdown {
+        width: 90%;
+        right: 5%;
+        top: 70px;
+    }
+    
+    /* Task item sliding */
+    .task-item-container.revealed .task-card-content {
+        transform: translateX(-60px); /* Fixed pixel value for mobile */
+    }
+
+    .task-complete-indicator {
+        width: 60px; /* Fixed pixel value for mobile */
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}

@@ -157,7 +157,7 @@ function renderProgressOverview() {
                 const colorClass = colors[index % colors.length];
                 
                 return `
-                <div class="card-item ${colorClass}">
+                <div class="card-item ${colorClass}" onclick="window.location.href='task/detailtask.html?id=${task.id}'" style="cursor: pointer;">
                     <div class="card-icon bg-white">📋</div>
                     <div class="card-content">
                         <small>${task.group || 'General'}</small>

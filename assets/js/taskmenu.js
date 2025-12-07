@@ -30,19 +30,33 @@ const tasks = getTasks();
 // ============================================
 
 /**
+ * Fungsi untuk mengupdate state dan tampilan dropdown
+ * @param {string} group - Nama grup yang dipilih
+ */
+function updateDropdownState(group) {
+    currentGroup = group;
+    const textDisplay = document.getElementById('selectedGroupName');
+    if (textDisplay) {
+        // Cari text yang sesuai dari options yang sudah di-render
+        const option = document.querySelector(`.custom-dropdown-option[data-value="${group}"]`);
+        textDisplay.textContent = option ? option.textContent : (group === 'all' ? 'Semua Group' : group);
+    }
+}
+
+
+/**
  * Fungsi inisialisasi utama
  * Dipanggil saat halaman pertama kali dimuat
  */
 function init() {
-    // Inisialisasi dropdown untuk filter grup
+    // Inisialisasi dropdown untuk filter grup (event listeners, dll.)
     initTaskMenuDropdown();
     
     // Cek apakah ada parameter grup dari URL (dari home page)
     const urlGroup = getUrlParam('group');
     if (urlGroup) {
-        currentGroup = urlGroup;
-        // Re-initialize untuk update tampilan text dropdown
-        initTaskMenuDropdown(); 
+        // Hanya update state, jangan re-attach listeners
+        updateDropdownState(urlGroup);
     }
 
     // Render daftar tugas pertama kali
@@ -55,14 +69,14 @@ function init() {
 
 /**
  * Fungsi untuk inisialisasi custom dropdown Task Group
+ * Fungsi ini sekarang hanya bertanggung jawab untuk setup awal dan event listeners
  */
 function initTaskMenuDropdown() {
     const wrapper = document.querySelector('.custom-dropdown-wrapper');
     if (!wrapper) return;
     
     const optionsContainer = document.getElementById('groupOptions');
-    const textDisplay = document.getElementById('selectedGroupName');
-
+    
     // Ambil semua grup unik dari tasks
     const groups = ['all', ...new Set(tasks.map(t => t.group || 'Lainnya'))];
 
@@ -71,8 +85,8 @@ function initTaskMenuDropdown() {
         `<div class="custom-dropdown-option" data-value="${g}">${g === 'all' ? 'Semua Group' : g}</div>`
     ).join('');
 
-    // Set tampilan awal dropdown
-    textDisplay.textContent = currentGroup === 'all' ? 'Semua Group' : currentGroup;
+    // Set tampilan awal dropdown (sebelum cek URL param)
+    updateDropdownState(currentGroup);
 
     // Event listener untuk membuka dropdown
     const display = wrapper.querySelector('.custom-dropdown-display');
@@ -85,9 +99,8 @@ function initTaskMenuDropdown() {
         if (e.target.classList.contains('custom-dropdown-option')) {
             const selectedValue = e.target.getAttribute('data-value');
             
-            // Update state dan tampilan
-            currentGroup = selectedValue;
-            textDisplay.textContent = e.target.textContent;
+            // Update state dan tampilan menggunakan fungsi baru
+            updateDropdownState(selectedValue);
             
             // Tutup dropdown
             wrapper.classList.remove('open');
@@ -191,6 +204,20 @@ function renderTasks() {
     } else if (currentFilter === 'Selesai') {
         filteredTasks = filteredTasks.filter(t => getTaskCategory(t) === 'Selesai');
     }
+
+    // Sort tasks: task yang belum selesai di atas, yang sudah selesai di bawah
+    filteredTasks.sort((a, b) => {
+        const aDone = a.status === 'done' ? 1 : 0;
+        const bDone = b.status === 'done' ? 1 : 0;
+        
+        // Jika status berbeda, yang belum selesai (0) akan di atas
+        if (aDone !== bDone) {
+            return aDone - bDone;
+        }
+        
+        // Jika status sama, sort berdasarkan deadline (yang terdekat di atas)
+        return new Date(a.end) - new Date(b.end);
+    });
 
     // Render hasil filter
     if (filteredTasks.length === 0) {
