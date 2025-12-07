@@ -92,6 +92,20 @@ if(calendarContainer) {
     });
 }
 
+// Enable Mouse Wheel Scroll untuk semua elemen horizontal-scroll
+const horizontalScrollElements = document.querySelectorAll('.horizontal-scroll');
+horizontalScrollElements.forEach(element => {
+    element.addEventListener('wheel', (evt) => {
+        if (evt.deltaY !== 0) {
+            evt.preventDefault();
+            element.scrollLeft += evt.deltaY;
+        }
+    });
+});
+
+// Initialize notification system
+initNotifications();
+
 // Render kalender pertama kali
 renderCalendar();
 

@@ -294,3 +294,6 @@ function completeTask(taskId) {
 
 // Panggil fungsi init saat halaman dimuat
 init();
+
+// Initialize notification system
+initNotifications();

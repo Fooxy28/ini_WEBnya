@@ -33,11 +33,21 @@ Web Task and Schedule Management adalah aplikasi berbasis web yang membantu peng
 - Mengedit dan menghapus jadwal
 - Notifikasi visual untuk jadwal hari ini
 
+### 🔔 Sistem Notifikasi
+- **Real-time Notifications**: Notifikasi otomatis untuk jadwal dan tugas
+- **Upcoming Schedules**: Peringatan 10 menit sebelum jadwal dimulai
+- **Task Deadlines**: Notifikasi untuk tugas yang jatuh tempo hari ini
+- **Overdue Alerts**: Peringatan untuk tugas yang terlambat
+- **Badge Counter**: Tampilan jumlah notifikasi yang belum dibaca
+- **Auto-refresh**: Pembaruan notifikasi otomatis setiap menit
+- **Dropdown Interface**: Panel notifikasi yang dapat diklik dengan animasi smooth
+
 ### 🎨 Desain & UX
 - Desain responsif untuk berbagai ukuran layar
 - Smooth animations dan transitions
 - Color-coded task groups untuk identifikasi cepat
 - Intuitive navigation dengan back button support
+- Mouse wheel support untuk horizontal scrolling
 
 ## 🛠️ Teknologi yang Digunakan
 
@@ -67,6 +77,7 @@ ini_WEBnya/
 │       ├── home.js           # Dashboard logic
 │       ├── profile.js        # Profile page logic
 │       ├── editprofile.js    # Edit profile logic
+│       ├── notifications.js  # Notification system
 │       ├── addtask.js        # Add task logic
 │       ├── edittask.js       # Edit task logic
 │       ├── detailtask.js     # Task detail logic

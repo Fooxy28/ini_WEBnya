@@ -14,9 +14,26 @@
             <a href="javascript:history.back()" class="back-btn-dashboard">❮</a>
             <div class="notification-icon">
                 🔔
+                <span class="notification-badge">0</span>
                 <div class="notification-dot"></div>
             </div>
         </header>
+
+        <!-- Notification Dropdown -->
+        <div class="notification-overlay"></div>
+        <div class="notification-dropdown">
+            <div class="notification-header">
+                <h3>Notifications</h3>
+                <span class="notification-count">0</span>
+            </div>
+            <div class="notification-list">
+                <div class="notification-empty">
+                    <div class="notification-empty-icon">🔔</div>
+                    <p>No new notifications</p>
+                </div>
+            </div>
+            <div class="mark-all-read">Mark all as read</div>
+        </div>
 
         <!-- Task Menu Controls -->
         <div class="task-menu-header">
@@ -71,6 +88,8 @@
 
     <!-- Main Script -->
     <script src="../../assets/js/script.js"></script>
+    <!-- Notification Script -->
+    <script src="../../assets/js/notifications.js"></script>
     <!-- Page Specific Script -->
     <script src="../../assets/js/taskmenu.js"></script>
 </body>
