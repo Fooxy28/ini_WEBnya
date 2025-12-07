@@ -34,8 +34,8 @@ if (schedule) {
     document.getElementById('end').value = schedule.end;
 } else {
     // Jika jadwal tidak ditemukan
-    alert('Jadwal tidak ditemukan!');
-    history.back();
+    toastError('Jadwal tidak ditemukan!', 'Error');
+    setTimeout(() => history.back(), 1000);
 }
 
 // ============================================
@@ -59,6 +59,9 @@ document.getElementById('editScheduleForm').addEventListener('submit', function(
     saveSchedule(updatedSchedule);
     
     // Tampilkan pesan sukses dan redirect ke halaman detail
-    alert('Jadwal berhasil diperbarui!');
-    window.location.href = `detailschedule.html?id=${scheduleId}`;
+    toastSuccess('Jadwal berhasil diperbarui!', 'Berhasil');
+    setTimeout(() => {
+        // Kembali ke detail page yang asli (melewati edit page)
+        history.go(-1);
+    }, 1000);
 });

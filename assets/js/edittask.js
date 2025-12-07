@@ -47,8 +47,8 @@ if (task) {
     document.getElementById('end').value = task.end;
 } else {
     // Jika tugas tidak ditemukan
-    alert('Tugas tidak ditemukan!');
-    history.back();
+    toastError('Tugas tidak ditemukan!', 'Error');
+    setTimeout(() => history.back(), 1000);
 }
 
 // ============================================
@@ -75,6 +75,10 @@ document.getElementById('editTaskForm').addEventListener('submit', function(e) {
     saveTask(updatedTask);
     
     // Tampilkan pesan sukses dan redirect ke halaman detail
-    alert('Tugas berhasil diperbarui!');
-    window.location.href = `detailtask.html?id=${taskId}`;
+    toastSuccess('Tugas berhasil diperbarui!', 'Berhasil');
+    setTimeout(() => {
+        // Gunakan history.go(-2) untuk kembali ke detail page yang asli (melewati edit page)
+        // Kemudian replace dengan detail page yang terupdate
+        history.go(-1);
+    }, 1000);
 });

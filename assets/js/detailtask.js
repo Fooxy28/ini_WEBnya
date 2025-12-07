@@ -28,8 +28,8 @@ const task = getTaskById(taskId);
 
 if (!task) {
     // Jika tugas tidak ditemukan
-    alert('Tugas tidak ditemukan!');
-    history.back();
+    toastError('Tugas tidak ditemukan!', 'Error');
+    setTimeout(() => history.back(), 1000);
 } else {
     /**
      * Helper function untuk format tanggal

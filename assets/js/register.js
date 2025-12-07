@@ -17,19 +17,19 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
     
     // Validasi: pastikan semua field terisi
     if (!username || !account || !password || !confirmPassword) {
-        alert('Semua field harus diisi!');
+        toastError('Semua field harus diisi!', 'Validasi Gagal');
         return;
     }
     
     // Validasi: pastikan password dan confirm password sama
     if (password !== confirmPassword) {
-        alert('Password dan konfirmasi password tidak sama!');
+        toastError('Password dan konfirmasi password tidak sama!', 'Validasi Gagal');
         return;
     }
     
     // Validasi: pastikan password minimal 6 karakter
     if (password.length < 6) {
-        alert('Password minimal 6 karakter!');
+        toastError('Password minimal 6 karakter!', 'Validasi Gagal');
         return;
     }
     
@@ -39,14 +39,14 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
     // Cek apakah username sudah terdaftar
     const userExists = users.find(u => u.username === username);
     if (userExists) {
-        alert('Username sudah terdaftar! Silakan gunakan username lain.');
+        toastWarning('Username sudah terdaftar! Silakan gunakan username lain.', 'Username Sudah Digunakan');
         return;
     }
     
     // Cek apakah account sudah terdaftar
     const accountExists = users.find(u => u.account === account);
     if (accountExists) {
-        alert('Account sudah terdaftar! Silakan gunakan account lain.');
+        toastWarning('Account sudah terdaftar! Silakan gunakan account lain.', 'Account Sudah Digunakan');
         return;
     }
     
@@ -65,8 +65,10 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
     localStorage.setItem('users', JSON.stringify(users));
     
     // Tampilkan pesan sukses
-    alert('Registrasi berhasil! Silakan login.');
+    toastSuccess('Registrasi berhasil! Silakan login.', 'Berhasil');
     
     // Redirect ke halaman login
-    window.location.href = '../index.html';
+    setTimeout(() => {
+        window.location.href = '../index.html';
+    }, 1500);
 });

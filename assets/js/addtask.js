@@ -41,6 +41,8 @@ document.getElementById('addTaskForm').addEventListener('submit', function(e) {
     saveTask(newTask);
     
     // Tampilkan pesan sukses dan redirect ke task menu
-    alert('Tugas berhasil ditambahkan!');
-    window.location.href = 'taskmenu.html';
+    toastSuccess('Tugas berhasil ditambahkan!', 'Berhasil');
+    setTimeout(() => {
+        window.location.href = 'taskmenu.html';
+    }, 1000);
 });

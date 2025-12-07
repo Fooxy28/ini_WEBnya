@@ -28,8 +28,8 @@ const schedule = getScheduleById(scheduleId);
 
 if (!schedule) {
     // Jika jadwal tidak ditemukan
-    alert('Jadwal tidak ditemukan!');
-    history.back();
+    toastError('Jadwal tidak ditemukan!', 'Error');
+    setTimeout(() => history.back(), 1000);
 } else {
     /**
      * Helper function untuk format tanggal

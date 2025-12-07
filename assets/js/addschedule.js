@@ -64,6 +64,8 @@ document.getElementById('addScheduleForm').addEventListener('submit', function(e
     saveSchedule(newSchedule);
     
     // Tampilkan pesan sukses dan redirect ke home
-    alert('Jadwal berhasil ditambahkan!');
-    window.location.href = '../home.html';
+    toastSuccess('Jadwal berhasil ditambahkan!', 'Berhasil');
+    setTimeout(() => {
+        window.location.href = '../home.html';
+    }, 1000);
 });

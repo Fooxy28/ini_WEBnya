@@ -67,56 +67,15 @@
                             </div>
                         </div>
             
-                        <button type="submit" class="btn btn-block">Simpan Tugas</button>
-                    </form>
-                </div>
-            
-                <!-- Main Script -->
-                <script src="../../assets/js/script.js"></script>
-                <!-- Page Specific Script -->
-                <script src="../../assets/js/edittask.js"></script>
-            </body>
-            </html>
-            
-                    const taskId = getUrlParam('id');
-                    const task = getTaskById(taskId);
-                    
-                    const dropdownWrapper = document.querySelector('.custom-dropdown-wrapper');
-                    initCustomDropdown(dropdownWrapper);
-            
-                    // Populate form with existing data
-                    if (task) {
-                        document.getElementById('group').value = task.group;
-                        document.getElementById('selectedGroupText').textContent = task.group;
-                        document.getElementById('name').value = task.name;
-                        document.getElementById('description').value = task.description;
-                        document.getElementById('start').value = task.start;
-                        document.getElementById('end').value = task.end;
-                    } else {
-                        alert('Tugas tidak ditemukan!');
-                        history.back();
-                    }
-            
-                    // Handle form submission
-                    document.getElementById('editTaskForm').addEventListener('submit', function(e) {
-                        e.preventDefault();
-                        
-                        const updatedTask = {
-                            id: taskId, // Keep the original ID
-                            group: document.getElementById('group').value,
-                            name: document.getElementById('name').value,
-                            description: document.getElementById('description').value,
-                            start: document.getElementById('start').value,
-                            end: document.getElementById('end').value,
-                            progress: task.progress, // Preserve original progress
-                            status: task.status // Preserve original status
-                        };
-            
-                        saveTask(updatedTask);
-                        alert('Tugas berhasil diperbarui!');
-                        window.location.href = `detailtask.html?id=${taskId}`; // Redirect back to detail page
-                    });
-                </script>
-            </body>
-            </html>
+                    <button type="submit" class="btn btn-block">Simpan Tugas</button>
+                </form>
+            </div>
+        
+            <!-- Main Script -->
+            <script src="../../assets/js/toast.js"></script>
+            <script src="../../assets/js/script.js"></script>
+            <!-- Page Specific Script -->
+            <script src="../../assets/js/edittask.js"></script>
+        </body>
+        </html>
             

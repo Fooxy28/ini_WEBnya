@@ -55,8 +55,10 @@ if (user) {
 
 } else {
     // Jika user tidak ditemukan (seharusnya tidak terjadi karena checkAuth)
-    alert('User tidak ditemukan!');
-    window.location.href = '../index.html';
+    toastError('User tidak ditemukan!', 'Error');
+    setTimeout(() => {
+        window.location.href = '../index.html';
+    }, 1000);
 }
 
 // ============================================
@@ -101,6 +103,9 @@ document.getElementById('editProfileForm').addEventListener('submit', function(e
     }
 
     // Tampilkan pesan sukses dan redirect ke halaman profil
-    alert('Profil berhasil diperbarui!');
-    window.location.href = 'profile.html';
+    toastSuccess('Profil berhasil diperbarui!', 'Berhasil');
+    setTimeout(() => {
+        // Kembali ke profile page yang asli (melewati edit page)
+        history.go(-1);
+    }, 1000);
 });

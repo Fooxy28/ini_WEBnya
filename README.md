@@ -41,6 +41,11 @@ Web Task and Schedule Management adalah aplikasi berbasis web yang membantu peng
 - **Badge Counter**: Tampilan jumlah notifikasi yang belum dibaca
 - **Auto-refresh**: Pembaruan notifikasi otomatis setiap menit
 - **Dropdown Interface**: Panel notifikasi yang dapat diklik dengan animasi smooth
+- **Custom Toast Notifications**: Popup notifikasi modern yang menggantikan alert() default browser
+  - Success, Error, Warning, dan Info toast dengan desain yang menarik
+  - Auto-dismiss dengan progress bar animasi
+  - Posisi top-right yang tidak mengganggu
+  - Smooth animations dan responsive design
 
 ### 🎨 Desain & UX
 - Desain responsif untuk berbagai ukuran layar

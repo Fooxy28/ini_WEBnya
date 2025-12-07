@@ -15,7 +15,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     
     // Validasi: pastikan username dan password tidak kosong
     if (!username.trim() || !password.trim()) {
-        alert('Username dan password tidak boleh kosong!');
+        toastError('Username dan password tidak boleh kosong!', 'Validasi Gagal');
         return;
     }
     
@@ -24,9 +24,12 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     
     if(result.success) {
         // Redirect ke halaman home jika login berhasil
-        window.location.href = 'pages/home.html';
+        toastSuccess('Login berhasil! Mengalihkan...', 'Selamat Datang');
+        setTimeout(() => {
+            window.location.href = 'pages/home.html';
+        }, 1000);
     } else {
         // Tampilkan pesan error spesifik sesuai hasil login
-        alert(result.message);
+        toastError(result.message, 'Login Gagal');
     }
 });
