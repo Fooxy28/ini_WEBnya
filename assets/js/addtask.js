@@ -34,7 +34,9 @@ document.getElementById('addTaskForm').addEventListener('submit', function(e) {
         name: document.getElementById('name').value,
         description: document.getElementById('description').value,
         start: document.getElementById('start').value,
-        end: document.getElementById('end').value
+        end: document.getElementById('end').value,
+        status: 'todo', // Default status
+        progress: 0      // Default progress
     };
 
     // Simpan tugas ke storage

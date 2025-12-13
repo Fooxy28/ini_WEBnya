@@ -532,6 +532,46 @@ function checkAuth() {
 }
 
 // ============================================
+// CUSTOM DROPDOWN INITIALIZATION
+// ============================================
+
+/**
+ * Fungsi untuk inisialisasi custom dropdown
+ * @param {HTMLElement} dropdownWrapper - Element wrapper dari dropdown
+ */
+function initCustomDropdown(dropdownWrapper) {
+    const display = dropdownWrapper.querySelector('.custom-dropdown-display');
+    const hiddenInput = dropdownWrapper.querySelector('input[type="hidden"]');
+    const optionsContainer = dropdownWrapper.querySelector('.custom-dropdown-options');
+    const options = optionsContainer.querySelectorAll('.custom-dropdown-option');
+    const selectedText = dropdownWrapper.querySelector('#selectedGroupText');
+
+    // Toggle dropdown
+    display.addEventListener('click', () => {
+        optionsContainer.style.display = optionsContainer.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Handle option selection
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            const value = option.getAttribute('data-value');
+            hiddenInput.value = value;
+            if (selectedText) {
+                selectedText.textContent = value;
+            }
+            optionsContainer.style.display = 'none';
+        });
+    });
+
+    // Close dropdown if clicked outside
+    document.addEventListener('click', (e) => {
+        if (!dropdownWrapper.contains(e.target)) {
+            optionsContainer.style.display = 'none';
+        }
+    });
+}
+
+// ============================================
 // AUTO-INITIALIZE ON LOAD
 // ============================================
 
